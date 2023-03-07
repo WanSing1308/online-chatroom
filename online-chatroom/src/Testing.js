@@ -3,22 +3,78 @@ const TestingChatrooms = (
         {
             id:1,
             name:"testing1",
-            users:["Sam","Peter","Thomas"]
+            users:["Sam","Peter","Thomas"],
+            messages:[
+                        {
+                            sender:"Sam",
+                            time:"2023/3/7",
+                            content:"Here is the messages 1",
+                        },
+                        {
+                            sender:"Peter",
+                            time:"2023/3/7",
+                            content:"Here is the messages 2",
+                        }, 
+                        {
+                            sender:"Thomas",
+                            time:"2023/3/7",
+                            content:"Here is the messages 3",
+                        }, 
+                               
+                    ],
         },
         {
             id:2,
             name:"testing2",
-            users:["Sam","Thomas"]
+            users:["Sam","Thomas"],
+            messages:[
+                {
+                    sender:"Sam",
+                    time:"2023/3/7",
+                    content:"Here is the messages 1",
+                },
+                {
+                    sender:"Thomas",
+                    time:"2023/3/7",
+                    content:"Here is the messages 2",
+                },        
+            ],
         },
         {
             id:3,
             name:"testing3",
-            users:["Sam","Peter"]
+            users:["Sam","Peter"],
+            messages:[
+                {
+                    sender:"Sam",
+                    time:"2023/3/7",
+                    content:"Here is the messages 1",
+                },
+                {
+                    sender:"Peter",
+                    time:"2023/3/7",
+                    content:"Here is the messages 2",
+                }, 
+                
+            ],
         },
         {
             id:4,
             name:"testing4",
-            users:["Peter","Thomas"]
+            users:["Peter","Thomas"],
+            messages:[
+                {
+                    sender:"Peter",
+                    time:"2023/3/7",
+                    content:"Here is the messages 1",
+                }, 
+                {
+                    sender:"Thomas",
+                    time:"2023/3/7",
+                    content:"Here is the messages 2",
+                }        
+            ],
+
         },
     ]
 )
