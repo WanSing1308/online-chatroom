@@ -1,0 +1,44 @@
+const TestingChatrooms = (
+    [
+        {
+            id:1,
+            name:"testing1",
+            users:["Sam","Peter","Thomas"]
+        },
+        {
+            id:2,
+            name:"testing2",
+            users:["Sam","Thomas"]
+        },
+        {
+            id:3,
+            name:"testing3",
+            users:["Sam","Peter"]
+        },
+        {
+            id:4,
+            name:"testing4",
+            users:["Peter","Thomas"]
+        },
+    ]
+)
+const TestingUsers = (
+    [
+        {
+            name:"Peter",
+            password:"Peter",
+            id:1,
+        },
+        {
+            name:"Sam",
+            password:"Sam",
+            id:2,
+        },
+        {
+            name:"Thomas",
+            password:"Thomas",
+            id:3,
+        },
+    ]
+)
+export {TestingChatrooms,TestingUsers}
