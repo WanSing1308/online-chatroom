@@ -3,19 +3,25 @@ import {TestingChatrooms} from "./Testing"
 import Chatroom from "./Chatroom"
 
 function ChatroomList(prop){
-
-    const Chatrooms = TestingChatrooms.filter(
-        (chatroom)=>chatroom.users.find( user => user==prop.user)
+    
+    const chatrooms = TestingChatrooms.filter(
+        (chatroom)=>chatroom.users.find( user => user===prop.currentUser)
     )
-
-    const ChatroomsElem = Chatrooms.map((chatroom)=>{
-        return  <Chatroom Click={()=>{prop.handleClick(chatroom.name)}} name={chatroom.name} key={chatroom.id} selected={chatroom.name==prop.currentChatroom}/>
+/*     console.log(!prop.currentChatroom,chatrooms[0].name)
+    if (!prop.currentChatroom)
+    {
+        prop.handleClick(chatrooms[0].name)
+        return
+    } */
+         
+    const chatroomsElem = chatrooms.map((chatroom)=>{
+        return  <Chatroom Click={()=>{prop.handleClick(chatroom.name)}} name={chatroom.name} key={chatroom.id} selected={chatroom.name===prop.currentChatroom}/>
     })
 
 
     return (
         <div className="ChatroomsList">
-            {ChatroomsElem}
+            {chatroomsElem}
         </div>
     )
 }

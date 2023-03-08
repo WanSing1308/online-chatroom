@@ -1,6 +1,29 @@
 .message{
     border:1px solid black;
-    border-radius: 5px;
-    display:inline-block;
+    border-radius: 10px;
+    max-width: 40%;
+    margin: 10px 0;
+    clear: both;
+    display: table;
+    padding:10px;
+}
+.message:hover{
+    background-color: aqua;
+}
+.left{
+    float:left;
+}
+.right{
+    float:right;
+}
+.sender{
+    font-weight: bold;
+}
+.time{
+    font-size:small;
+    float:right;
+}
+.content{
 
 }
+

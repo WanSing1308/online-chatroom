@@ -2,16 +2,12 @@
     border:1px solid black;
     display:flex;
     align-items: center;
+    cursor: pointer;
+}
+.Chatroom:hover{ 
+    background-color: lightcyan ; 
+}
 
-}
-.gg-close{
-    margin-left:45%;
-    display:none;
-}
 h3{
     margin-left:10px;
-}
-.Chatroom:hover  .gg-close{
-    cursor: pointer;
-    display:block;
 }
