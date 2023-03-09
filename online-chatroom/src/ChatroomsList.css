@@ -3,4 +3,5 @@
     height : 100vh;
     width: 20%;
     position:fixed;
+    overflow-y: auto;
 }

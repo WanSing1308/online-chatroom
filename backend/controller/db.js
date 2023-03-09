@@ -2,8 +2,8 @@ const User = require("../models/user");
 const Chatroom = require("../models/chatroom");
 
 createUser = async (req,res)=>{
+    const {name,password} = req.body
     try{
-        const {name,password} = req.body
         await User.create({name,password})
         res.json({success:true})
     }
@@ -12,7 +12,7 @@ createUser = async (req,res)=>{
     }
 }
 userLogin = async (req,res)=>{
-    console.log(req.body)
+    
     try{
         const user =  await User.findOne(req.body)
         if (user)
@@ -29,7 +29,6 @@ userLogin = async (req,res)=>{
         res.json({sucess:false,message:"Error occured"})
     }
 }
-
 createChatroom = async (req,res)=>{
     const {chatroomName,userName} = req.body
     try{
@@ -42,7 +41,18 @@ createChatroom = async (req,res)=>{
         res.json({succes:false,error:err})
     }
 }
-
+AddUser = async (req,res)=>{
+    const {chatroomName,userName} = req.body
+    try{
+        const user = await User.findOne({name:userName})
+        await Chatroom.create({name:chatroomName})
+        await Chatroom.findOneAndUpdate({name:chatroomName},{$push:{members:user._id}})
+        res.json({sucess:true})
+    }
+    catch(err){
+        res.json({succes:false,error:err})
+    }
+}
 sendMessage = async (req,res)=>{
     const {content,username,chatroomName} =   req.body
     console.log(content,username)
@@ -55,6 +65,16 @@ sendMessage = async (req,res)=>{
         res.json({succes:false,error:err})
     }
 }
+getMessage = async (req,res)=>{
+    const {chatroomName} = req.body
+    try{
+        const messages = await Chatroom.findOne({name:chatroomName},"messages")
+        res.json(messages)
+    }
+    catch(err){
+        res.json({sucess:false,error:err})
+    }
+}
 function deleteRoom(req,res){
 
 }
@@ -62,4 +82,4 @@ function deleteMessage(req,res){
 
 }
 
-module.exports = {createUser,userLogin,createChatroom,sendMessage}
+module.exports = {createUser,userLogin,createChatroom,sendMessage,getMessage}

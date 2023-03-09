@@ -10,18 +10,18 @@ function LoginPage(prop){
         const name = event.target.name
         const value = event.target.value
         setInputData((oldData)=>({...oldData,[name]:value}))
-        console.log(value)
+
     }
 
     function handleSubmit(){
         console.log(inputData)
-        const userobj = TestingUsers.find((user)=>user.name==inputData.username)
-        if (userobj==undefined){
+        const userobj = TestingUsers.find((user)=>user.name===inputData.username)
+        if (userobj===undefined){
             console.log("User not exist")
             return
         }
             
-        if (userobj.password != inputData.password){
+        if (userobj.password !== inputData.password){
             console.log("Incorrect password")
             return
         }

@@ -1,14 +1,12 @@
 import "./Chatroom.css"
 
 function Chatroom(prop){
-    const selectedStyle = {backgroundColor:"lightgrey"}
-
 
     return (
-    <div className="Chatroom" onClick={prop.Click} style={prop.selected? selectedStyle:{} }>
-        <h3>{prop.name}</h3>
-        {/* <i class="gg-close"></i> */}
-    </div>)
+        <div className={prop.selected? "Chatroom selected" : "Chatroom"} onClick={prop.Click}>
+            <div>{prop.name}</div>
+        </div>
+    )
 }
 
 export default Chatroom

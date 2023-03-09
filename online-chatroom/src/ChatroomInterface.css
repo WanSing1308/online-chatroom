@@ -1,0 +1,21 @@
+.ChatroomInterface{
+    left:20%;
+    position:fixed;
+    width:80%;
+}
+.Chatroom-info{
+    height:10vh;
+    border:1px solid black;
+    display:flex;
+    align-items: center;
+    font-size:1.2rem;
+}
+.Chatroom-messages{
+    height:80vh;
+    border:1px solid black;
+}
+.Chatroom-toolbar{
+    height:10vh;
+    border:1px solid black;
+}
+

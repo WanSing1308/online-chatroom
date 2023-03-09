@@ -1,13 +1,14 @@
+
 .Chatroom{
     border:1px solid black;
     display:flex;
     align-items: center;
     cursor: pointer;
+    height:10vh;
 }
 .Chatroom:hover{ 
     background-color: lightcyan ; 
 }
-
-h3{
-    margin-left:10px;
+.selected{
+    background-color:darkgrey !important;
 }
