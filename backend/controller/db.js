@@ -1,32 +1,59 @@
 const User = require("../models/user");
 const Chatroom = require("../models/chatroom");
 
-/* createUser = async (req,res)=>{
+createUser = async (req,res)=>{
+    try{
+        const {name,password} = req.body
+        await User.create({name,password})
+        res.json({success:true})
+    }
+    catch(err){
+        res.json({success:false})
+    }
+}
+userLogin = async (req,res)=>{
     console.log(req.body)
-    res.json({testing:true})
+    try{
+        const user =  await User.findOne(req.body)
+        if (user)
+        {   
+            res.json({success:true})
+        }
+        else{
+            res.json({success:false,message:"username or password incorrect"})
+        }
+        
+    }
+    catch(err){
+
+        res.json({sucess:false,message:"Error occured"})
+    }
 }
 
-function createChatroom(req,res){
+createChatroom = async (req,res)=>{
     const {chatroomName,userName} = req.body
-    User.findOne({name:userName}).exec((err,user)=>{
-        if (err){
-            console.log("error happened in finding the user")
-            res.json({success:false})
-        }
-        if (!user){
-            console.log("User not exist")
-            res.json({success:false})
-        }
-        Chatroom.findOneAndUpdate({name:chatroomName},{$push:{members:user._id}},{new:true},(err,chatroom)=>{
-            if (err)
-            res.json({success:false})
-            else
-                res.json({success:true})
-        })
-    })
+    try{
+        const user = await User.findOne({name:userName})
+        await Chatroom.create({name:chatroomName})
+        await Chatroom.findOneAndUpdate({name:chatroomName},{$push:{members:user._id}})
+        res.json({sucess:true})
+    }
+    catch(err){
+        res.json({succes:false,error:err})
+    }
 }
-function sendMessage(req,res){
 
+sendMessage = async (req,res)=>{
+    const {content,username,chatroomName} =   req.body
+    console.log(content,username)
+    try{
+        const user = await User.findOne({name:username})
+        await Chatroom.findOneAndUpdate({name:chatroomName},{$push:{messages:{sender:user._id,content:content}}})
+        res.json({sucess:true})
+    }
+    catch(err){
+        res.json({succes:false,error:err})
+    }
 }
 function deleteRoom(req,res){
 
@@ -34,7 +61,5 @@ function deleteRoom(req,res){
 function deleteMessage(req,res){
 
 }
-function UserLogin(req,res){
-    
-}
-module.exports = {createUser} */
+
+module.exports = {createUser,userLogin,createChatroom,sendMessage}
