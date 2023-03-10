@@ -1,11 +1,17 @@
 const express = require("express")
 const router = express.Router();
-const {createUser,userLogin,createChatroom,sendMessage,getMessage,fetchChatrooms} = require("../controller/db")
+const { createUser,
+        userLogin,
+        createChatroom,
+        sendMessage,getMessage,
+        fetchChatrooms,
+        deleteMessage} = require("../controller/db")
 
-router.route("/createuser").post(createUser)
-router.route("/userlogin").post(userLogin)
-router.route("/createchatroom").post(createChatroom)
-router.route("/sendmessage").post(sendMessage)
-router.route("/getmessage").post(getMessage)
-router.route("/fetchchatrooms").post(fetchChatrooms)
+router.route("/createUser").post(createUser)
+router.route("/userLogin").post(userLogin)
+router.route("/createChatroom").post(createChatroom)
+router.route("/sendMessage").post(sendMessage)
+router.route("/getMessage").post(getMessage)
+router.route("/fetchChatrooms").post(fetchChatrooms)
+router.route("/deleteMessage/:messageId").delete(deleteMessage)
 module.exports = router

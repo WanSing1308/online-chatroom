@@ -14,7 +14,7 @@ function LoginPage(prop){
 
     const handleSignUp = async ()=>{
         try{
-            const res = await fetch("http://localhost:3000/api/createuser",{
+            const res = await fetch("http://localhost:3000/api/createUser",{
                 method:"POST",
                 headers: {
                     'Accept': 'application/json',
@@ -24,9 +24,11 @@ function LoginPage(prop){
             })
             const data = await res.json()
             if (data.success){
+                alert("sign up success")
             }
             else{
-            }
+                alert("sign up failed")
+            }   
         }
         catch(err){
         } 
@@ -34,7 +36,7 @@ function LoginPage(prop){
 
     const handleLogin= async ()=>{
         try{
-            const res = await fetch("http://localhost:3000/api/userlogin",{
+            const res = await fetch("http://localhost:3000/api/userLogin",{
                             method:"POST",
                             headers: {
                                 'Accept': 'application/json',
@@ -44,12 +46,14 @@ function LoginPage(prop){
                         })
             const data = await res.json()
             if (data.success){
-                prop.Login(inputData.username)
+                prop.Login(inputData.userName)
             }
             else{
+                alert("User not exist")
             }
         }
         catch(err){
+            alert("login failed")
         }
     }
     
@@ -57,7 +61,7 @@ function LoginPage(prop){
         <div className="LoginBox">
             <div className="inputfield">
                 <label>Username:</label>
-                <input id="username" name="username" value={inputData.username||""} onChange={handelChange}></input>
+                <input id="userName" name="userName" value={inputData.userName||""} onChange={handelChange}></input>
 
             </div>
             <div className="inputfield">

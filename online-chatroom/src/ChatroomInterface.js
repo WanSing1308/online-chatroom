@@ -2,64 +2,82 @@ import "./ChatroomInterface.css"
 import MessagesContainer from "./MessagesContainer"
 import react from "react"
 function ChatroomInterface(prop){
+    console.log("ChatroomInterface render")
     const [content,setContent] = react.useState("")
     const [messages,setMessages] = react.useState("")
+    react.useEffect(()=>{fetchMesssages()},[prop.currentChatroom])
 
     function handleInput(e){
-        console.log(e.target.value)
         setContent(e.target.value)
     }
 
-    const sendmessage = async ()=>{
-        const res = await fetch("http://localhost:3000/api/sendmessage",{
+    const sendMessage = async ()=>{
+        try{
+            const res = await fetch("http://localhost:3000/api/sendMessage",{
                             method:"POST",
                             headers: {
                                 'Accept': 'application/json',
                                 'Content-Type': 'application/json'
                             },
-                            body: JSON.stringify({content:content,username:prop.currentUser,chatroomname:prop.currentChatroom})
+                            body: JSON.stringify({content:content,userName:prop.currentUser,chatroomName:prop.currentChatroom})
                             })
-        
-        const response = await res.json()
-        if (response.success)
-        {
-            fetchmesssages()
-            setContent("")
+            const response = await res.json()
+            if (response.success)
+            {
+                fetchMesssages()
+                setContent("")
+            }
         }
-        else
-            alert("something broken")
+        catch(err){}
+    }
+    const deleteMessage = async (messageID)=>{
+        console.log(messageID);
+        try{
+            const res = await fetch(`http://localhost:3000/api/deleteMessage/${messageID}`,
+            {
+                method:"DELETE",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+            }})
+            const response = await res.json()
+            if (response.success)
+                fetchMesssages()
+        }
+        catch(err){}
     }
     
-    const fetchmesssages = async () =>{
+    const fetchMesssages = async () =>{
         if (!prop.currentChatroom)
             return []
         try{
-            const res = await fetch("http://localhost:3000/api/getmessage",{
+            const res = await fetch("http://localhost:3000/api/getMessage",{
                             method:"POST",
                             headers: {
                                 'Accept': 'application/json',
                                 'Content-Type': 'application/json'
                             },
-                            body: JSON.stringify({chatroomname:prop.currentChatroom})
+                            body: JSON.stringify({chatroomName:prop.currentChatroom})
                         })
             const {messages} = await res.json()
             setMessages(messages)
         }
         catch(err){
-            alert("failed")
+            
         }
     }
 
-    react.useEffect(()=>{fetchmesssages()},[prop.currentChatroom])
-
     return (
     <div className="ChatroomInterface">
-        <div className="Chatroom-info">{prop.currentChatroom}</div>
-        <MessagesContainer currentChatroom={prop.currentChatroom} currentUser={prop.currentUser} messages={messages}></MessagesContainer>
+        <div className="Chatroom-info">
+            {prop.currentChatroom}
+        </div>
+        <MessagesContainer currentChatroom={prop.currentChatroom} currentUser={prop.currentUser} deletemessage={(messageId)=>{deleteMessage(messageId)}} messages={messages}></MessagesContainer>
+
         <div className="Chatroom-toolbar">
             <div className="container">
                 <input className="textfield" placeholder="text" onChange={handleInput} value={content}></input>
-                <button onClick={sendmessage}>Send</button>
+                <button onClick={sendMessage}>Send</button>
             </div>
         </div>
     </div>)

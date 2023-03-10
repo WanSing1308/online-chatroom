@@ -1,18 +1,18 @@
 const mongoose = require("mongoose")
 
 const ChatroomSchema = mongoose.Schema({
-    chatroomname:{
+    chatroomName:{
       type:String,
       required:true
     },
     members:[{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"user"
+        ref:"User"
     }],
     messages:[{
       sender:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"user"
+        ref:"User"
       },
       time:{
         type:Date,

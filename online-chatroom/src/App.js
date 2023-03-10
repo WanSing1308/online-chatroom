@@ -5,8 +5,8 @@ import ChatroomsList from "./ChatroomsList"
 import ChatroomInterface from "./ChatroomInterface"
 
 function App() {
-  const [currentUser,setCurrentUser] = react.useState("Sam")
-  const [currentChatroom,setCurrentChatroom] = react.useState("Room1")
+  const [currentUser,setCurrentUser] = react.useState("")
+  const [currentChatroom,setCurrentChatroom] = react.useState("")
 
   return (
     <div className="App">
