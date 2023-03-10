@@ -2,7 +2,11 @@ import "./ChatroomsList.css"
 import Chatroom from "./Chatroom"
 import react from "react"
 function ChatroomsList(prop){
-    
+    const [newchatroomname,setnewchatroomname] = react.useState("")
+    function handleInput(e){
+        console.log(newchatroomname)
+        setnewchatroomname(e.target.value)
+    }
     const fetchchatrooms = async ()=>{
         try{
             const res = await fetch("http://localhost:3000/api/fetchchatrooms",{
@@ -29,6 +33,30 @@ function ChatroomsList(prop){
         catch(err){
         }
     }
+    const createchatroom = async ()=>{
+        try{
+            const res = await fetch("http://localhost:3000/api/createchatroom",{
+                            method:"POST",
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({username:prop.currentUser,chatroomname:newchatroomname})
+                        })
+            const response = await res.json();
+            if (response.success)
+            {
+                alert("created")
+                fetchchatrooms()
+            } 
+            else
+                alert("failed")
+        }
+        catch(err){
+
+        }
+    
+    }
     const [chatroomsElem,setChatroomsElem] =  react.useState([])
     react.useEffect(()=>{fetchchatrooms();},[prop.currentChatroom])
     return (
@@ -37,8 +65,8 @@ function ChatroomsList(prop){
                 {chatroomsElem}
                 <div className="ChatroomsList-toolbar">
                     <div>
-                        <input placeholder="name"></input>
-                        <button>+</button>
+                        <input placeholder="name" value={newchatroomname} onChange={handleInput}></input>
+                        <button onClick={createchatroom}>create</button>
                     </div>
                     
                 </div>

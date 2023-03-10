@@ -34,7 +34,7 @@ createChatroom = async (req,res)=>{
         const user = await User.findOne({username:username})
         await Chatroom.create({chatroomname:chatroomname})
         await Chatroom.findOneAndUpdate({chatroomname:chatroomname},{$push:{members:user._id}})
-        res.json({sucess:true})
+        res.json({success:true})
     }
     catch(err){
         res.json({succes:false,error:err})
@@ -46,7 +46,7 @@ AddUser = async (req,res)=>{
         const user = await User.findOne({name:userName})
         await Chatroom.create({name:chatroomName})
         await Chatroom.findOneAndUpdate({name:chatroomName},{$push:{members:user._id}})
-        res.json({sucess:true})
+        res.json({success:true})
     }
     catch(err){
         res.json({succes:false,error:err})
