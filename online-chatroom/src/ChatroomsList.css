@@ -1,7 +1,22 @@
 .ChatroomsList{
     border: 1px solid black;
-    height : 100vh;
+    height : 92vh;
     width: 20%;
     position:fixed;
     overflow-y: auto;
+}
+.ChatroomsList-toolbar{
+    height : 8vh;
+    width: 20%;
+    position: fixed;
+    bottom: 0;
+    border:1px solid black;
+    display:flex;
+    align-items: center;
+    justify-content:space-evenly;
+
+}
+.ChatroomsList-toolbar > div{
+    display:flex;
+    heigth: 
 }

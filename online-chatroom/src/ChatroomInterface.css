@@ -17,5 +17,25 @@
 .Chatroom-toolbar{
     height:10vh;
     border:1px solid black;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container{
+    height:50%;
+    width:80%;
+    display: flex;
+    border:1px solid black;
+}
+.container .textfield{
+    width:80%;
+}
+.container button{
+    width:20%;
+    background-color: rgb(71, 71, 208);
+    color:white;
+    font-weight: bold;
+    content:"Asd";
 }
 

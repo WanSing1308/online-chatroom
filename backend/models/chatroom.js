@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 const ChatroomSchema = mongoose.Schema({
-    name:{
+    chatroomname:{
       type:String,
       required:true
     },

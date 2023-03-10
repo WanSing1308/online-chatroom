@@ -12,7 +12,7 @@ function App() {
     <div className="App">
       {currentUser? (
       <>
-        <ChatroomsList handleClick={(chatroom)=>setCurrentChatroom(chatroom)} currentUser={currentUser} currentChatroom={currentChatroom} />
+        <ChatroomsList changeroom={(chatroom)=>setCurrentChatroom(chatroom)} currentUser={currentUser} currentChatroom={currentChatroom} />
         <ChatroomInterface currentChatroom={currentChatroom} currentUser={currentUser}/>
       </>) 
 
