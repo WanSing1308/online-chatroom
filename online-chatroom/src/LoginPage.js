@@ -1,5 +1,4 @@
 import "./LoginPage.css"
-import {TestingUsers} from "./Testing"
 import react from "react"
 
 function LoginPage(prop){

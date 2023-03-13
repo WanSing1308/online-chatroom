@@ -76,7 +76,6 @@ getMessage = async (req,res)=>{
             path: "messages.sender",
             select: "userName"
           });
-          console.log(messages)
           console.log("getMessage success")
         res.json(messages)
     }
