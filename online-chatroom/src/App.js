@@ -5,27 +5,32 @@ import ChatroomsList from "./ChatroomsList"
 import ChatroomInterface from "./ChatroomInterface"
 
 function App() {
-  const [currentUser,setCurrentUser] = react.useState("")
-  const [currentChatroom,setCurrentChatroom] = react.useState("")
-
+  const [userData,setUserData] = react.useState({})
+  const [chatroomData,setChatroomData] = react.useState({})
   return (
     <div className="App">
-      {currentUser? (
-      <>
+      {JSON.stringify(userData)=="{}"? 
+        <LoginPage Login={ (newUserData)=>{setUserData(newUserData)}}/>
+        :
+        (
+          <>
         <ChatroomsList 
-          changeroom={(chatroom)=>setCurrentChatroom(chatroom)} 
-          currentUser={currentUser} 
-          currentChatroom={currentChatroom} 
+          changeroom={(newchatroomData)=>{
+            setChatroomData(newchatroomData)
+          }} 
+          userData={userData}
+          chatroomData={chatroomData}
         />
         <ChatroomInterface 
-          currentChatroom={currentChatroom} 
-          currentUser={currentUser}
+          userData={userData}
+          chatroomData={chatroomData}
         />
-      </>) 
+      </>
+      ) }
 
-      : <LoginPage Login={ (username)=>{setCurrentUser(username)}}/>}
+        
     </div>
-  );
+  )
 }
 
 export default App;

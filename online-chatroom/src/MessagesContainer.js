@@ -4,8 +4,15 @@ import react from "react"
 function MessagesContainer(prop){
     console.log("MessagesContainer render")
     let messagesElem
+    
     if (prop.messages)
-        messagesElem = prop.messages.map((message)=><Message delete={()=>{prop.deletemessage(message._id)}} key={message._id} message={message}currentUser={prop.currentUser}/>)
+        messagesElem = prop.messages.map((message)=>(
+        <Message 
+            delete={()=>{prop.deletemessage(message._id)}} 
+            key={message._id} 
+            message={message}
+            userName={prop.userData.userName}
+        />))
     else
         messagesElem = []
     return (

@@ -46,7 +46,7 @@ function LoginPage(prop){
                         })
             const data = await res.json()
             if (data.success){
-                prop.Login(inputData.userName)
+                prop.Login(data.user)
             }
             else{
                 alert("User not exist")

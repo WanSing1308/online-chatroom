@@ -2,37 +2,44 @@ import "./ChatroomsList.css"
 import Chatroom from "./Chatroom"
 import react from "react"
 function ChatroomsList(prop){
-    console.log("ChatroomList render")
     const [newChatroomName,setNewChatroomName] = react.useState("")
     const [chatroomsElem,setChatroomsElem] =  react.useState([])
-    react.useEffect(()=>{fetchChatrooms();},[prop.currentChatroom])
+    
+    react.useEffect(()=>{fetchChatrooms();},[prop.chatroomData])
 
     function handleInput(event){
         setNewChatroomName(event.target.value)
     }
-
+    
     const fetchChatrooms = async ()=>{
         try{
-            const res = await fetch(`http://localhost:3000/api/chatrooms/${prop.currentUser}`)
-            const chatrooms = await res.json()
-            if (chatrooms){
-                if (prop.currentChatroom){
-                    const chatroomselem = chatrooms.map((chatroom)=>{
-                        return  <Chatroom click={( )=>prop.changeroom(chatroom.chatroomName)} name={chatroom.chatroomName} key={chatroom._id} selected={chatroom.chatroomName===prop.currentChatroom}/>
-                    })
-                    setChatroomsElem(chatroomselem)
-                }
-                else{
-                    prop.changeroom(chatrooms[0].chatroomName)
-                }
+            const res = await fetch(`http://localhost:3000/api/chatroom/${prop.userData._id}`)
+            if (res==="{}")
+                setChatroomsElem([])  
+            else{
+                const {chatrooms} = await res.json()
+                const chatroomselem = chatrooms.map((chatroom)=>(
+                    <Chatroom 
+                        click={()=>{
+                            prop.changeroom({
+                                chatroomName:chatroom.chatroomName,
+                                _id:chatroom._id
+                            })
+                        }} 
+                        name={chatroom.chatroomName} 
+                        key={chatroom._id} 
+                        selected={chatroom._id===prop.chatroomData._id}
+                    />))
+                setChatroomsElem(chatroomselem)
             }
+            
         }
         catch(err){
         }
     }
     const createChatroom = async ()=>{
         try{
-            const res = await fetch(`http://localhost:3000/api/chatroom/${prop.currentUser}`,{
+            const res = await fetch(`http://localhost:3000/api/chatroom/${prop.userData._id}`,{
                             method:"POST",
                             headers: {
                                 'Accept': 'application/json',

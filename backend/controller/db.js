@@ -62,6 +62,8 @@ fetchChatrooms = async (req,res)=>{
     
 }
 
+
+
 sendMessage = async (req,res)=>{
     console.log("sendMessage");
     const {chatroomID,userID} = req.params
@@ -100,7 +102,25 @@ getMessage = async (req,res)=>{
     }
 }
 
+addUser = async (req,res)=>{
+    console.log("addUser")
+    const {chatroomID}= req.params
+    const {userName} = req.body
+    console.log(userName)
+    console.log(chatroomID)
+    try{
+        console.log("1")
+        const user = await User.findOneAndUpdate({userName:userName},{$push:{chatrooms:chatroomID}})
+        console.log(user)
 
+        await Chatroom.findOneAndUpdate({_id:chatroomID},{$push:{members:user._id}})
+        console.log("addUser success")
+        res.json({success:true})
+    } 
+    catch(err){
+        res.json({success:false})
+    }
+}
 
 deleteMessage = async (req,res)=>{
     console.log("deleteMessage");
@@ -121,4 +141,4 @@ deleteMessage = async (req,res)=>{
     }
 }
 
-module.exports = {createUser,userLogin,createChatroom,sendMessage,getMessage,fetchChatrooms,deleteMessage}
+module.exports = {createUser,userLogin,createChatroom,sendMessage,getMessage,fetchChatrooms,deleteMessage,addUser}
