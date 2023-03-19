@@ -12,8 +12,15 @@ function App() {
     <div className="App">
       {currentUser? (
       <>
-        <ChatroomsList changeroom={(chatroom)=>setCurrentChatroom(chatroom)} currentUser={currentUser} currentChatroom={currentChatroom} />
-        <ChatroomInterface currentChatroom={currentChatroom} currentUser={currentUser}/>
+        <ChatroomsList 
+          changeroom={(chatroom)=>setCurrentChatroom(chatroom)} 
+          currentUser={currentUser} 
+          currentChatroom={currentChatroom} 
+        />
+        <ChatroomInterface 
+          currentChatroom={currentChatroom} 
+          currentUser={currentUser}
+        />
       </>) 
 
       : <LoginPage Login={ (username)=>{setCurrentUser(username)}}/>}

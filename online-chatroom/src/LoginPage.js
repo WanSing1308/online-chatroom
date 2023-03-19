@@ -3,6 +3,7 @@ import react from "react"
 
 function LoginPage(prop){
 
+    
     const [inputData,setInputData] = react.useState({})
 
     function handelChange(event){
@@ -13,7 +14,7 @@ function LoginPage(prop){
 
     const handleSignUp = async ()=>{
         try{
-            const res = await fetch("http://localhost:3000/api/createUser",{
+            const res = await fetch("http://localhost:3000/api/user/sign-up",{
                 method:"POST",
                 headers: {
                     'Accept': 'application/json',
@@ -35,7 +36,7 @@ function LoginPage(prop){
 
     const handleLogin= async ()=>{
         try{
-            const res = await fetch("http://localhost:3000/api/userLogin",{
+            const res = await fetch("http://localhost:3000/api/user/login",{
                             method:"POST",
                             headers: {
                                 'Accept': 'application/json',
@@ -61,7 +62,6 @@ function LoginPage(prop){
             <div className="inputfield">
                 <label>Username:</label>
                 <input id="userName" name="userName" value={inputData.userName||""} onChange={handelChange}></input>
-
             </div>
             <div className="inputfield">
                 <label>Password:</label>

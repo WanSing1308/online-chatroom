@@ -13,14 +13,7 @@ function ChatroomsList(prop){
 
     const fetchChatrooms = async ()=>{
         try{
-            const res = await fetch("http://localhost:3000/api/fetchChatrooms",{
-                            method:"POST",
-                            headers: {
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({userName:prop.currentUser})
-                        })
+            const res = await fetch(`http://localhost:3000/api/chatrooms/${prop.currentUser}`)
             const chatrooms = await res.json()
             if (chatrooms){
                 if (prop.currentChatroom){
@@ -39,13 +32,13 @@ function ChatroomsList(prop){
     }
     const createChatroom = async ()=>{
         try{
-            const res = await fetch("http://localhost:3000/api/createChatroom",{
+            const res = await fetch(`http://localhost:3000/api/chatroom/${prop.currentUser}`,{
                             method:"POST",
                             headers: {
                                 'Accept': 'application/json',
                                 'Content-Type': 'application/json'
                             },
-                            body: JSON.stringify({userName:prop.currentUser,chatroomName:newChatroomName})
+                            body: JSON.stringify({chatroomName:newChatroomName})
                         })
             const response = await res.json();
             if (response.success)

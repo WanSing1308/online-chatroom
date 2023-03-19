@@ -10,10 +10,10 @@ function ChatroomInterface(prop){
     function handleInput(e){
         setContent(e.target.value)
     }
-
+    const addUser = async ()
     const sendMessage = async ()=>{
         try{
-            const res = await fetch("http://localhost:3000/api/sendMessage",{
+            const res = await fetch("http://localhost:3000/api/message",{
                             method:"POST",
                             headers: {
                                 'Accept': 'application/json',
@@ -33,7 +33,7 @@ function ChatroomInterface(prop){
     const deleteMessage = async (messageID)=>{
         console.log(messageID);
         try{
-            const res = await fetch(`http://localhost:3000/api/deleteMessage/${messageID}`,
+            const res = await fetch(`http://localhost:3000/api/message/${messageID}`,
             {
                 method:"DELETE",
                 headers: {
@@ -51,7 +51,7 @@ function ChatroomInterface(prop){
         if (!prop.currentChatroom)
             return []
         try{
-            const res = await fetch("http://localhost:3000/api/getMessage",{
+            const res = await fetch("http://localhost:3000/api/message",{
                             method:"POST",
                             headers: {
                                 'Accept': 'application/json',
@@ -71,8 +71,16 @@ function ChatroomInterface(prop){
     <div className="ChatroomInterface">
         <div className="Chatroom-info">
             {prop.currentChatroom}
+            <input placeholder="Username"></input>
+            <button onClick={addUser}>Add User</button>
         </div>
-        <MessagesContainer currentChatroom={prop.currentChatroom} currentUser={prop.currentUser} deletemessage={(messageId)=>{deleteMessage(messageId)}} messages={messages}></MessagesContainer>
+            
+        <MessagesContainer 
+            currentChatroom={prop.currentChatroom} 
+            currentUser={prop.currentUser} 
+            deletemessage={(messageId)=>{deleteMessage(messageId)}} 
+            messages={messages}>
+        </MessagesContainer>
 
         <div className="Chatroom-toolbar">
             <div className="container">

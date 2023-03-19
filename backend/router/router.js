@@ -7,11 +7,12 @@ const { createUser,
         fetchChatrooms,
         deleteMessage} = require("../controller/db")
 
-router.route("/createUser").post(createUser)
-router.route("/userLogin").post(userLogin)
-router.route("/createChatroom").post(createChatroom)
-router.route("/sendMessage").post(sendMessage)
-router.route("/getMessage").post(getMessage)
-router.route("/fetchChatrooms").post(fetchChatrooms)
-router.route("/deleteMessage/:messageId").delete(deleteMessage)
+router.route("/user/sign-up").post(createUser)
+router.route("/user/login").post(userLogin)
+
+router.route("/chatroom/:userID").post(createChatroom).get(fetchChatrooms)
+
+router.route("/message/:chatroomID/:userID?").post(sendMessage).get(getMessage) 
+router.route("/message/:chatroomID/:messageID").delete(deleteMessage)
+
 module.exports = router
