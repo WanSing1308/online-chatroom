@@ -11,7 +11,7 @@ function ChatroomInterface(prop){
         const content_input = document.getElementById("content")
         const content = content_input.value
         try{
-            const res = await fetch(`http://localhost:3000/api/message/${prop.chatroomData._id}/${prop.userData._id}`,
+            const res = await fetch(`http://localhost:3001/api/message/${prop.chatroomData._id}/${prop.userData._id}`,
                             {
                                 method:"POST",
                                 headers: {
@@ -31,7 +31,7 @@ function ChatroomInterface(prop){
     }
     const deleteMessage = async (messageID)=>{
         try{
-            const res = await fetch(`http://localhost:3000/api/message/${prop.chatroomData._id}/${messageID}`,
+            const res = await fetch(`http://localhost:3001/api/message/${prop.chatroomData._id}/${messageID}`,
             {
                 method:"DELETE",
                 headers: {
@@ -49,7 +49,7 @@ function ChatroomInterface(prop){
         if (JSON.stringify(prop.chatroomData)=="{}")
             return []
         try{
-            const res = await fetch(`http://localhost:3000/api/message/${prop.chatroomData._id}`)
+            const res = await fetch(`http://localhost:3001/api/message/${prop.chatroomData._id}`)
             const {messages} = await res.json()
             setMessages(messages)
         }
@@ -60,7 +60,7 @@ function ChatroomInterface(prop){
     const addUser = async()=>{
         const newUser = document.getElementById("newUser");
         try{
-            const res = await fetch(`http://localhost:3000/api/chatroom/${prop.chatroomData._id}`,
+            const res = await fetch(`http://localhost:3001/api/chatroom/${prop.chatroomData._id}`,
                         {
                             method:"PUT",
                             headers: {

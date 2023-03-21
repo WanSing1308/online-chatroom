@@ -1,36 +1,34 @@
 import './App.css';
 import react from "react"
-import LoginPage from "./LoginPage"
-import ChatroomsList from "./ChatroomsList"
-import ChatroomInterface from "./ChatroomInterface"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Chat from "./pages/Chat"
+import Login from "./pages/Login"
 
 function App() {
   const [userData,setUserData] = react.useState({})
   const [chatroomData,setChatroomData] = react.useState({})
-  return (
-    <div className="App">
-      {JSON.stringify(userData)=="{}"? 
-        <LoginPage Login={ (newUserData)=>{setUserData(newUserData)}}/>
-        :
-        (
-          <>
-        <ChatroomsList 
-          changeroom={(newchatroomData)=>{
-            setChatroomData(newchatroomData)
-          }} 
-          userData={userData}
-          chatroomData={chatroomData}
-        />
-        <ChatroomInterface 
-          userData={userData}
-          chatroomData={chatroomData}
-        />
-      </>
-      ) }
 
-        
-    </div>
+  return (
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={
+            <Login
+            Login={ (newUserData)=>{setUserData(newUserData)}}
+            />}
+          />
+          <Route path="/" element={<Chat
+            changeroom={(newchatroomData)=>{
+              setChatroomData(newchatroomData)
+            }} 
+            userData={userData}
+            chatroomData={chatroomData}
+            />}
+          />
+        </Routes>
+      </BrowserRouter>
   )
+
+  
 }
 
 export default App;

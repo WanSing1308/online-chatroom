@@ -1,17 +1,17 @@
 import "./MessagesContainer.css"
 import Message from "./Message"
 import react from "react"
-function MessagesContainer(prop){
+function MessagesContainer(props){
     console.log("MessagesContainer render")
     let messagesElem
     
-    if (prop.messages)
-        messagesElem = prop.messages.map((message)=>(
+    if (props.messages)
+        messagesElem = props.messages.map((message)=>(
         <Message 
-            delete={()=>{prop.deletemessage(message._id)}} 
+            delete={()=>{props.deletemessage(message._id)}} 
             key={message._id} 
             message={message}
-            userName={prop.userData.userName}
+            userName={props.userData.userName}
         />))
     else
         messagesElem = []

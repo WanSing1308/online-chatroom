@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose")
 const path = require("path");
+var cors = require('cors');
 require("dotenv").config();
 const PORT = process.env.PORT||3000;
 const app = express();
@@ -21,6 +22,7 @@ async function start(){
 
 app.use(express.static(path.resolve(__dirname+ "/../online-chatroom/build")));
 app.use(express.static("public"));
+app.use(cors());
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }));

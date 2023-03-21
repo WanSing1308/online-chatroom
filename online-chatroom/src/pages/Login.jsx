@@ -1,10 +1,10 @@
-import "./LoginPage.css"
-import react from "react"
+import "./Login.css"
+import React from "react"
+import { useNavigate } from "react-router-dom"
+function LoginPage(props){
 
-function LoginPage(prop){
-
-    
-    const [inputData,setInputData] = react.useState({})
+    const navigate = useNavigate()
+    const [inputData,setInputData] = React.useState({})
 
     function handelChange(event){
         const name = event.target.name
@@ -14,7 +14,7 @@ function LoginPage(prop){
 
     const handleSignUp = async ()=>{
         try{
-            const res = await fetch("http://localhost:3000/api/user/sign-up",{
+            const res = await fetch("http://localhost:3001/api/user/sign-up",{
                 method:"POST",
                 headers: {
                     'Accept': 'application/json',
@@ -36,7 +36,8 @@ function LoginPage(prop){
 
     const handleLogin= async ()=>{
         try{
-            const res = await fetch("http://localhost:3000/api/user/login",{
+            console.log("update")
+            const res = await fetch("http://localhost:3001/api/user/login",{
                             method:"POST",
                             headers: {
                                 'Accept': 'application/json',
@@ -46,7 +47,8 @@ function LoginPage(prop){
                         })
             const data = await res.json()
             if (data.success){
-                prop.Login(data.user)
+                props.Login(data.user)
+                navigate("/")
             }
             else{
                 alert("User not exist")

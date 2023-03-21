@@ -1,11 +1,11 @@
 import "./ChatroomsList.css"
 import Chatroom from "./Chatroom"
 import react from "react"
-function ChatroomsList(prop){
+function ChatroomsList(props){
     const [newChatroomName,setNewChatroomName] = react.useState("")
     const [chatroomsElem,setChatroomsElem] =  react.useState([])
     
-    react.useEffect(()=>{fetchChatrooms();},[prop.chatroomData])
+    react.useEffect(()=>{fetchChatrooms();},[props.chatroomData])
 
     function handleInput(event){
         setNewChatroomName(event.target.value)
@@ -13,7 +13,7 @@ function ChatroomsList(prop){
     
     const fetchChatrooms = async ()=>{
         try{
-            const res = await fetch(`http://localhost:3000/api/chatroom/${prop.userData._id}`)
+            const res = await fetch(`http://localhost:3001/api/chatroom/${props.userData._id}`)
             if (res==="{}")
                 setChatroomsElem([])  
             else{
@@ -21,14 +21,15 @@ function ChatroomsList(prop){
                 const chatroomselem = chatrooms.map((chatroom)=>(
                     <Chatroom 
                         click={()=>{
-                            prop.changeroom({
+                            console.log("click")
+                            props.changeroom({
                                 chatroomName:chatroom.chatroomName,
                                 _id:chatroom._id
                             })
                         }} 
                         name={chatroom.chatroomName} 
                         key={chatroom._id} 
-                        selected={chatroom._id===prop.chatroomData._id}
+                        selected={chatroom._id===props.chatroomData._id}
                     />))
                 setChatroomsElem(chatroomselem)
             }
@@ -39,7 +40,7 @@ function ChatroomsList(prop){
     }
     const createChatroom = async ()=>{
         try{
-            const res = await fetch(`http://localhost:3000/api/chatroom/${prop.userData._id}`,{
+            const res = await fetch(`http://localhost:3001/api/chatroom/${props.userData._id}`,{
                             method:"POST",
                             headers: {
                                 'Accept': 'application/json',
