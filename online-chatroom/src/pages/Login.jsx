@@ -47,7 +47,7 @@ function LoginPage(props){
                         })
             const data = await res.json()
             if (data.success){
-                props.Login(data.user)
+                localStorage.setItem("userID",data.userID)
                 navigate("/")
             }
             else{

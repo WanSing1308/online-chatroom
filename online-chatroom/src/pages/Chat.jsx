@@ -2,25 +2,22 @@ import React from "react"
 import { useNavigate } from "react-router-dom"
 import ChatroomsList from "../component/ChatroomsList"
 import ChatroomInterface from "../component/ChatroomInterface"
+import useLocalStorage from "../tool/useLocalStorage"
 
-export default function Chat(props){
+export default function Chat(){
     const navigate = useNavigate();
+    const userID = localStorage.getItem("userID")
+    const [currentRoomID,setCurrentRoomID] = useLocalStorage("currentRoomID",undefined)
+
     React.useEffect(()=>{
-        if (JSON.stringify(props.userData)==="{}")
-            navigate("/login")
-    },[])
-    
+        if (!userID)
+        navigate("/login")
+    })
+        
     return (
         <>
-            <ChatroomsList 
-                userData={props.userData} 
-                chatroomData={props.chatroomData}
-                changeroom={(newchatroomData)=>props.changeroom(newchatroomData)}
-            />
-            <ChatroomInterface 
-                userData={props.userData} 
-                chatroomData={props.chatroomData}
-            />
+            <ChatroomsList setCurrentRoomID={setCurrentRoomID} currentRoomID={currentRoomID}/>
+            <ChatroomInterface currentRoomID={currentRoomID}/>
         </>
     )
         

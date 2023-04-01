@@ -6,9 +6,13 @@
     cursor: pointer;
     height:10vh;
 }
-.Chatroom:hover{ 
+.Chatroom:hover { 
     background-color: lightcyan ; 
+}
+.Chatroom:hover ~ .icon{
+    display:block;
 }
 .selected{
     background-color:darkgrey !important;
 }
+

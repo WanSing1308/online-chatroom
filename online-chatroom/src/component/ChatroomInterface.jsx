@@ -1,17 +1,20 @@
 import "./ChatroomInterface.css"
 import MessagesContainer from "./MessagesContainer"
 import react from "react"
-function ChatroomInterface(prop){
-    console.log("ChatroomInterface render")
 
+
+function ChatroomInterface(props){
+    console.log("ChatroomInterface render")
+    const userID = localStorage.getItem("userID")
     const [messages,setMessages] = react.useState("")
-    react.useEffect(()=>{fetchMesssages()},[prop.chatroomData])
+
+    react.useEffect(()=>{fetchMesssages()},[props.currentRoomID])
 
     const sendMessage = async ()=>{
         const content_input = document.getElementById("content")
         const content = content_input.value
         try{
-            const res = await fetch(`http://localhost:3001/api/message/${prop.chatroomData._id}/${prop.userData._id}`,
+            const res = await fetch(`http://localhost:3001/api/message/${props.currentRoomID}/${userID}`,
                             {
                                 method:"POST",
                                 headers: {
@@ -31,7 +34,7 @@ function ChatroomInterface(prop){
     }
     const deleteMessage = async (messageID)=>{
         try{
-            const res = await fetch(`http://localhost:3001/api/message/${prop.chatroomData._id}/${messageID}`,
+            const res = await fetch(`http://localhost:3001/api/message/${props.currentRoomID}/${messageID}`,
             {
                 method:"DELETE",
                 headers: {
@@ -46,21 +49,20 @@ function ChatroomInterface(prop){
     }
     
     const fetchMesssages = async () =>{
-        if (JSON.stringify(prop.chatroomData)=="{}")
+        if (JSON.stringify(props.chatroomData)==="{}")
             return []
         try{
-            const res = await fetch(`http://localhost:3001/api/message/${prop.chatroomData._id}`)
+            const res = await fetch(`http://localhost:3001/api/message/${props.currentRoomID}/${userID}`)
             const {messages} = await res.json()
             setMessages(messages)
         }
-        catch(err){
-            
-        }
+        catch(err){}
     }
+
     const addUser = async()=>{
         const newUser = document.getElementById("newUser");
         try{
-            const res = await fetch(`http://localhost:3001/api/chatroom/${prop.chatroomData._id}`,
+            const res = await fetch(`http://localhost:3001/api/chatroom/${props.currentRoomID}`,
                         {
                             method:"PUT",
                             headers: {
@@ -77,15 +79,18 @@ function ChatroomInterface(prop){
     }
     return (
     <div className="ChatroomInterface">
+
         <div className="Chatroom-info">
-            {prop.chatroomData.chatroomName}
-            <input placeholder="Username" id="newUser"></input>
-            <button onClick={addUser}>Add User</button>
+            {props.currentRoomID}
+            <div className="Chatroom-addUser">
+                <input placeholder="Username" id="newUser"></input>
+                <button onClick={addUser}>Add User</button>
+            </div>
         </div>
             
         <MessagesContainer 
-            userData={prop.userData}
-            chatroomData={prop.chatroomData}
+            userID = {userID}
+            currentRoomID = {props.currentRoomID}
             deletemessage={(messageId)=>{deleteMessage(messageId)}} 
             messages={messages}>
         </MessagesContainer>

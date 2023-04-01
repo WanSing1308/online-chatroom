@@ -20,8 +20,9 @@ userLogin = async (req,res)=>{
     console.log("userLogin")
     try{
         const user =  await User.findOne(req.body)
+        console.log(user);
         if (user) 
-            res.json({user,success:true})
+            res.json({userID:user._id,success:true})
         else
             res.json({success:false,message:"username or password incorrect"}) 
     }
@@ -88,13 +89,18 @@ sendMessage = async (req,res)=>{
 
 getMessage = async (req,res)=>{
     console.log("getMessage")
-    const {chatroomID} = req.params
+    const {chatroomID,userID} = req.params
     try{
-        const messages = await Chatroom.findOne({_id:chatroomID},"messages").populate({
+        let messages = await Chatroom.findOne({_id:chatroomID},"messages").populate({
             path: "messages.sender",
             select: "userName"
           });
-        console.log("getMessage success")
+        console.log(2);
+        messages = messages.toObject()
+        console.log(3);
+
+        messages.messages = messages.messages.map(message => ({...message,fromSelf:userID==message.sender._id}))
+
         res.json(messages)
     }
     catch(err){
@@ -109,10 +115,7 @@ addUser = async (req,res)=>{
     console.log(userName)
     console.log(chatroomID)
     try{
-        console.log("1")
         const user = await User.findOneAndUpdate({userName:userName},{$push:{chatrooms:chatroomID}})
-        console.log(user)
-
         await Chatroom.findOneAndUpdate({_id:chatroomID},{$push:{members:user._id}})
         console.log("addUser success")
         res.json({success:true})

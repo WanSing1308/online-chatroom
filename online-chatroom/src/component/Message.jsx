@@ -1,11 +1,12 @@
 import "./Message.css"
 
-function Message(prop){
+function Message(props){
+    const {sender,time,fromSelf,content} = props.message
     return (
-        <div onClick={prop.delete} className={prop.message.sender.userName==prop.userName? "message right":"message left"}>
-            <div className="sender">{prop.message.sender.userName}</div>
-            <div className="content">{prop.message.content}</div>
-            <div className="time">{prop.message.time.split("T")[0]}</div>
+        <div onClick={props.delete} className={fromSelf? "message right":"message left"}>
+            <div className="sender">{sender.userName}</div>
+            <div className="content">{content}</div>
+            <div className="time">{time.split("T")[0]}</div>
         </div>
     )
 }

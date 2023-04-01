@@ -1,19 +1,21 @@
 import "./ChatroomsList.css"
 import Chatroom from "./Chatroom"
 import react from "react"
+
+
 function ChatroomsList(props){
     const [newChatroomName,setNewChatroomName] = react.useState("")
     const [chatroomsElem,setChatroomsElem] =  react.useState([])
-    
-    react.useEffect(()=>{fetchChatrooms();},[props.chatroomData])
+
+    const userID = localStorage.getItem("userID")
+    react.useEffect(()=>{fetchChatrooms()},[props.currentRoomID])
 
     function handleInput(event){
         setNewChatroomName(event.target.value)
     }
-    
     const fetchChatrooms = async ()=>{
         try{
-            const res = await fetch(`http://localhost:3001/api/chatroom/${props.userData._id}`)
+            const res = await fetch(`http://localhost:3001/api/chatroom/${userID}`)
             if (res==="{}")
                 setChatroomsElem([])  
             else{
@@ -21,26 +23,22 @@ function ChatroomsList(props){
                 const chatroomselem = chatrooms.map((chatroom)=>(
                     <Chatroom 
                         click={()=>{
-                            console.log("click")
-                            props.changeroom({
-                                chatroomName:chatroom.chatroomName,
-                                _id:chatroom._id
-                            })
+                            props.setCurrentRoomID(chatroom._id)
                         }} 
                         name={chatroom.chatroomName} 
                         key={chatroom._id} 
-                        selected={chatroom._id===props.chatroomData._id}
+                        selected={chatroom._id===props.currentRoomID}
                     />))
                 setChatroomsElem(chatroomselem)
             }
             
         }
-        catch(err){
-        }
+        catch(err){}
     }
+
     const createChatroom = async ()=>{
         try{
-            const res = await fetch(`http://localhost:3001/api/chatroom/${props.userData._id}`,{
+            const res = await fetch(`http://localhost:3001/api/chatroom/${userID}`,{
                             method:"POST",
                             headers: {
                                 'Accept': 'application/json',
@@ -48,8 +46,8 @@ function ChatroomsList(props){
                             },
                             body: JSON.stringify({chatroomName:newChatroomName})
                         })
-            const response = await res.json();
-            if (response.success)
+            const data = await res.json();
+            if (data.success)
                 fetchChatrooms() 
         }
         catch(err){}
