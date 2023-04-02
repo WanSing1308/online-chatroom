@@ -1,7 +1,7 @@
 import "./ChatroomInterface.css"
 import MessagesContainer from "./MessagesContainer"
 import react from "react"
-
+import axios from "axios"
 
 function ChatroomInterface(props){
     console.log("ChatroomInterface render")
@@ -14,46 +14,32 @@ function ChatroomInterface(props){
         const content_input = document.getElementById("content")
         const content = content_input.value
         try{
-            const res = await fetch(`http://localhost:3001/api/message/${props.currentRoomID}/${userID}`,
-                            {
-                                method:"POST",
-                                headers: {
-                                    'Accept': 'application/json',
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({content:content})
-                            })
-            const response = await res.json()
-            if (response.success)
-            {
+            const response = await axios.post(`http://localhost:3001/api/message/${props.currentRoomID}/${userID}`,{content:content})
+            const {data} = response
+            if (data.success){
                 fetchMesssages()
                 content_input.value = ""
             }
         }
         catch(err){}
     }
+
     const deleteMessage = async (messageID)=>{
         try{
-            const res = await fetch(`http://localhost:3001/api/message/${props.currentRoomID}/${messageID}`,
-            {
-                method:"DELETE",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-            }})
-            const response = await res.json()
-            if (response.success)
+            const response = await axios.delete(`http://localhost:3001/api/message/${props.currentRoomID}/${messageID}`)
+            const {data} = response
+            if (data.success)
                 fetchMesssages()
         }
         catch(err){}
     }
     
     const fetchMesssages = async () =>{
-        if (JSON.stringify(props.chatroomData)==="{}")
-            return []
+        if (!props.currentRoomID)
+            setMessages([])
         try{
-            const res = await fetch(`http://localhost:3001/api/message/${props.currentRoomID}/${userID}`)
-            const {messages} = await res.json()
+            const response = await axios.get(`http://localhost:3001/api/message/${props.currentRoomID}/${userID}`)
+            const {messages} = response.data
             setMessages(messages)
         }
         catch(err){}
@@ -62,17 +48,9 @@ function ChatroomInterface(props){
     const addUser = async()=>{
         const newUser = document.getElementById("newUser");
         try{
-            const res = await fetch(`http://localhost:3001/api/chatroom/${props.currentRoomID}`,
-                        {
-                            method:"PUT",
-                            headers: {
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({userName:newUser.value})
-                        })
-            const response = await res.json()
-            if (response.success)
+            const response = await axios.put(`http://localhost:3001/api/chatroom/${props.currentRoomID}`,{userName:newUser.value})
+            const {data} = response
+            if (data.success)
                 newUser.value=""
         }
         catch(err){}

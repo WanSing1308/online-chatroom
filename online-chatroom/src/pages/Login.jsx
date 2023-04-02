@@ -1,6 +1,7 @@
 import "./Login.css"
 import React from "react"
 import { useNavigate } from "react-router-dom"
+import axios from "axios"
 function LoginPage(props){
 
     const navigate = useNavigate()
@@ -14,45 +15,27 @@ function LoginPage(props){
 
     const handleSignUp = async ()=>{
         try{
-            const res = await fetch("http://localhost:3001/api/user/sign-up",{
-                method:"POST",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(inputData)
-            })
-            const data = await res.json()
-            if (data.success){
+            const response = await axios.post("http://localhost:3001/api/user/sign-up",inputData)
+            const {data} =response
+            if (data.success)
                 alert("sign up success")
-            }
-            else{
+            else
                 alert("sign up failed")
-            }   
         }
-        catch(err){
-        } 
+        catch(err){} 
     }
 
     const handleLogin= async ()=>{
         try{
             console.log("update")
-            const res = await fetch("http://localhost:3001/api/user/login",{
-                            method:"POST",
-                            headers: {
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(inputData)
-                        })
-            const data = await res.json()
+            const response = await axios.post("http://localhost:3001/api/user/login",inputData)
+            const {data} = response
             if (data.success){
                 localStorage.setItem("userID",data.userID)
                 navigate("/")
             }
-            else{
+            else
                 alert("User not exist")
-            }
         }
         catch(err){
             alert("login failed")

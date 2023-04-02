@@ -7,9 +7,8 @@ function MessagesContainer(props){
     
     if (!props.messages)
         messagesElem = []
-
     else{
-        messagesElem = props.messages.map((message)=>(
+        messagesElem = props.messages.map(message =>(
             <Message 
                 delete={()=>{props.deletemessage(message._id)}} 
                 key={message._id} 
