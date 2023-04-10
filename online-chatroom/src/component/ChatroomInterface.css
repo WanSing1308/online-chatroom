@@ -1,4 +1,4 @@
-.ChatroomInterface{
+#ChatroomInterface{
     left:20%;
     position:fixed;
     width:80%;
@@ -14,7 +14,7 @@
     height:80vh;
     border:1px solid black;
 }
-.Chatroom-toolbar{
+#ChatroomInterface-textbar-container{
     height:10vh;
     border:1px solid black;
     display:flex;
@@ -22,16 +22,16 @@
     justify-content: center;
 }
 
-.container{
+#ChatroomInterface-textbar{
     height:50%;
     width:80%;
     display: flex;
     border:1px solid black;
 }
-.container .textfield{
+#ChatroomInterface-textbar .textfield{
     width:80%;
 }
-.container button{
+#ChatroomInterface-textbar button{
     width:20%;
     background-color: rgb(71, 71, 208);
     color:white;

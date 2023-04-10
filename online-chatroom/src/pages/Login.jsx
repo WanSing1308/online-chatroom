@@ -2,7 +2,8 @@ import "./Login.css"
 import React from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
-function LoginPage(props){
+import socket from "../tool/socket"
+function LoginPage(){
 
     const navigate = useNavigate()
     const [inputData,setInputData] = React.useState({})
@@ -27,11 +28,12 @@ function LoginPage(props){
 
     const handleLogin= async ()=>{
         try{
-            console.log("update")
             const response = await axios.post("http://localhost:3001/api/user/login",inputData)
             const {data} = response
             if (data.success){
-                localStorage.setItem("userID",data.userID)
+                localStorage.setItem("userID",data.userID)          
+                socket.connect()
+                socket.emit("login",{userID:data.userID,userName:inputData.userName})
                 navigate("/")
             }
             else

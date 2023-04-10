@@ -5,7 +5,7 @@ function MessagesContainer(props){
     
     let messagesElem
     
-    if (!props.messages)
+    if (!props.messages.length)
         messagesElem = []
     else{
         messagesElem = props.messages.map(message =>(

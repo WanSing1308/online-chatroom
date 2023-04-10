@@ -4,12 +4,11 @@ const useLocalStorage = (key,defaultValue) =>{
     const [storedValue ,setStoreValue] = react.useState(()=>{
         try{
             const value = localStorage.getItem(key);
-
             if (value){
                 return JSON.parse(value);
             }
             else{
-                localStorage.setItem(key,JSON.stringify(defaultValue))
+                localStorage.setItem(key,defaultValue)
                 return defaultValue
             }
         }
@@ -17,15 +16,16 @@ const useLocalStorage = (key,defaultValue) =>{
             return defaultValue;
         }
     });
-    const setValue = newValue =>{
+    const setValue = (newValue) =>{
         try{
-            localStorage.setItem(key,JSON.stringify(newValue))
+            localStorage.setItem(key,newValue)
         }
         catch(err){
             console.log(err);
         }
         setStoreValue(newValue);
     }
+
     return [storedValue,setValue]
 }
 export default useLocalStorage
