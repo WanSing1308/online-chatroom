@@ -11,6 +11,7 @@ export default function Chat(){
     const [currentRoomID,setCurrentRoomID] = React.useState(localStorage.getItem("currentRoomID") || undefined)
     // const [currentRoomID,setCurrentRoomID] = useLocalStorage("currentRoomID",undefined)
     const [connected,setConnected] = React.useState(socket.connected)
+
     React.useEffect(()=>{
         socket.on("connect",()=>{setConnected(true)})
         socket.on("disconnect",()=>{setConnected(false)})
@@ -26,7 +27,6 @@ export default function Chat(){
     },[])
     return (
         <>
-
             <ChatroomsList 
                 changeRoom={(id)=>{setCurrentRoomID(id);localStorage.setItem("currentRoomID",id)}} 
                 currentRoomID={currentRoomID}

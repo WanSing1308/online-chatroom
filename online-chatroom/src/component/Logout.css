@@ -1,0 +1,14 @@
+.Logout-btn{
+    padding:15px;
+    background-color: blue;
+    color:white;
+    font-weight: bold;
+    position: fixed;
+    right: 0;
+    height:10vh;
+}
+
+.Logout-btn:hover{
+    background-color: rgb(71, 71, 208);
+    cursor: pointer;
+}

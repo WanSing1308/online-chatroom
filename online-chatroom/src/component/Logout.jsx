@@ -1,6 +1,6 @@
 import socket from "../tool/socket"
 import { useNavigate } from "react-router-dom"
-
+import "./Logout.css"
 function Logout(){
     const userID = localStorage.getItem("userID")
     const navigate = useNavigate()
@@ -11,7 +11,7 @@ function Logout(){
         navigate("/login")
     }
     return (
-        <button onClick={logout}>Logout</button>
+        <button className="Logout-btn" onClick={logout}>Logout</button>
     )
 }
 export default Logout

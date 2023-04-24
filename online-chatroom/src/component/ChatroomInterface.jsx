@@ -62,7 +62,7 @@ function ChatroomInterface(props){
     return (
     <div id="ChatroomInterface">
 
-        <div className="Chatroom-info">
+        <div className="ChatroomInterface-navbar">
             <Logout/>
         </div>
             
@@ -70,8 +70,8 @@ function ChatroomInterface(props){
             userID = {userID}
             currentRoomID = {props.currentRoomID}
             deletemessage={(messageId)=>{deleteMessage(messageId)}} 
-            messages={messages}>
-        </MessagesContainer>
+            messages={messages}
+        />
 
         <div id="ChatroomInterface-textbar-container">
             <div id="ChatroomInterface-textbar">
@@ -80,8 +80,9 @@ function ChatroomInterface(props){
                     placeholder="text" 
                     id="content" 
                     onKeyDown={(e)=>{e.key==="Enter" && sendMessage()}}
+                    disabled={!currentRoomID}
                 />
-                <button onClick={sendMessage}>Send</button>
+                <button onClick={sendMessage} disabled={!currentRoomID}>Send</button>
             </div>
         </div>
     </div>)

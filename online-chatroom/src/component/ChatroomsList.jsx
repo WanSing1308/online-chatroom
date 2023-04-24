@@ -47,7 +47,7 @@ function ChatroomsList(props){
                 {chatroomsElem}
                 <div id="ChatroomsList-toolbar-container">
                     <div id="ChatroomsList-toolbar">
-                        <button onClick={()=>{navigate("/createRoom")}}>Create Room</button>
+                        <button className="button-9" onClick={()=>{navigate("/createRoom")}}>Create Room</button>
                         <button onClick={()=>{navigate("/addUser")}}>Add User</button>
                     </div>
                 </div>

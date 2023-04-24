@@ -1,4 +1,4 @@
-
+import "./CreateRoom.css"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 
@@ -8,24 +8,26 @@ function CreateRoom(){
     
     const createChatroom = async ()=>{
         try{
-            const roomName = document.getElementById("room name").value
+            const roomNameField = document.getElementById("room name")
+            const roomName = roomNameField.value
             const response = await axios.post(`http://localhost:3001/api/chatroom/${userID}`,{chatroomName:roomName})
             const {data} = response
             if (data.success)
-                console.log("success")
+                roomNameField.value = "";
         }
         catch(err){}
     }
     return (
-        <div className="box">
-            <div>Create Room</div>
-            <div className="inputfield">
-                <label htmlFor="userName" >Room name</label>
+        <div className="CreateRoom-box">
+            <h1 className="CreateRoom-heading">Create Room</h1>
+            <div className="CreateRoom-inputfield">
+                <label htmlFor="userName" >Room name:</label>
                 <input type="text" placeholder="room name" id="room name" ></input>
             </div>
-            
-            <button onClick={()=>{createChatroom()}}>Create</button>
-            <button onClick={()=>{navigate("/")}}>Back</button>
+                <div className="CreateRoom-btnContainer"> 
+                <button onClick={()=>{createChatroom()}}>Create</button>
+                <button onClick={()=>{navigate("/")}}>Back</button>
+            </div>
         </div>
     )
 }

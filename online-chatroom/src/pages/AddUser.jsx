@@ -7,14 +7,14 @@ function AddUser(){
     const currentRoomID = localStorage.getItem("currentRoomID")
 
     const addUser = async()=>{
-        const newUser = document.getElementById("userName");
-        const newUserName = newUser.value;
+        const newUserField = document.getElementById("userName");
+        const newUserName = newUserField.value;
         try{
             const response = await axios.put(`http://localhost:3001/api/chatroom/${currentRoomID}`,{userName:newUserName})
             const {data} = response
             if (data.success)
             {
-                newUser.value=""
+                newUserField.value=""
                 socket.emit("invite-to-room",newUserName)
             }
                 
@@ -22,15 +22,16 @@ function AddUser(){
         catch(err){}
     }
     return (
-        <div className="box">
-            <div className="">Add User</div>
-            <div className="inputfield">
-                <label htmlFor="userName" >Username</label>
+        <div className="AddUser-box">
+            <h1 className="AddUser-heading">Add User</h1>
+            <div className="AddUser-inputfield">
+                <label htmlFor="userName" >Username:</label>
                 <input type="text" placeholder="Username" id="userName" ></input>
             </div>
-            
-            <button onClick={addUser}>Add</button>
-            <button onClick={()=>{navigate("/")}}>Back</button>
+            <div className="AddUser-btnContainer"> 
+                <button onClick={()=>{navigate("/")}}>Back</button>
+                <button onClick={addUser}>Add</button>
+            </div>
         </div>
     )
 }
