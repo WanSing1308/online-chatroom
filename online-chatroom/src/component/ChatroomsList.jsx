@@ -1,17 +1,16 @@
 import "./ChatroomsList.css"
 import Chatroom from "./Chatroom"
-import react from "react"
+import {useState,useEffect,useContext} from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import socket from "../tool/socket"
+import { IDContext } from "../pages/Chat"
 
 function ChatroomsList(props){
-    console.log("ChatroomList render")
-    const [chatroomsElem,setChatroomsElem] =  react.useState([])
+    const [chatroomsElem,setChatroomsElem] =  useState([])
+    const {userID,currentRoomID,setCurrentRoomID} = useContext(IDContext)
 
-    const userID = props.userID
-    const currentRoomID = props.currentRoomID
-    react.useEffect(()=>{
+    useEffect(()=>{
         socket.on("reload-room",()=>{fetchChatrooms()})
         return ()=>{
             socket.off("reload-room")
@@ -19,7 +18,7 @@ function ChatroomsList(props){
     })
     const navigate = useNavigate()
 
-    react.useEffect(()=>{fetchChatrooms()},[props.currentRoomID])
+    useEffect(()=>{fetchChatrooms()},[currentRoomID])
 
     const fetchChatrooms = async ()=>{
         try{
@@ -28,9 +27,9 @@ function ChatroomsList(props){
             const chatroomselem = chatrooms.map((chatroom)=>(
                 <Chatroom 
                     click = {()=>{
-                        props.changeRoom(chatroom._id);
                         socket.emit("leave",currentRoomID)
                         socket.emit("join",chatroom._id)
+                        setCurrentRoomID(chatroom._id);
                     }} 
                     name =  {chatroom.chatroomName} 
                     key = {chatroom._id} 
@@ -47,7 +46,7 @@ function ChatroomsList(props){
                 {chatroomsElem}
                 <div id="ChatroomsList-toolbar-container">
                     <div id="ChatroomsList-toolbar">
-                        <button className="button-9" onClick={()=>{navigate("/createRoom")}}>Create Room</button>
+                        <button onClick={()=>{navigate("/createRoom")}}>Create Room</button>
                         <button onClick={()=>{navigate("/addUser")}}>Add User</button>
                     </div>
                 </div>

@@ -1,8 +1,6 @@
 import "./MessagesContainer.css"
 import Message from "./Message"
 function MessagesContainer(props){
-    console.log("MessagesContainer render")
-    
     let messagesElem
     
     if (!props.messages.length)

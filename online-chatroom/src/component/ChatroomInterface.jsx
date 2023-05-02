@@ -1,21 +1,17 @@
 import "./ChatroomInterface.css"
 import MessagesContainer from "./MessagesContainer"
 import Logout from "./Logout"
-import { useNavigate } from "react-router-dom"
-import react from "react"
+import {useContext,useEffect,useState} from "react"
 import axios from "axios"
 import socket from "../tool/socket"
+import {IDContext} from "../pages/Chat"
 
 function ChatroomInterface(props){
-    console.log("ChatroomInterface render")
-
-    const currentRoomID = props.currentRoomID
-    const userID = localStorage.getItem("userID")
-    const [messages,setMessages] = react.useState("")
+    const {currentRoomID,userID} = useContext(IDContext)
+    const [messages,setMessages] = useState("")
     
-    const navigate = useNavigate();
-    react.useEffect(()=>{fetchMesssages()},[props.currentRoomID])
-    react.useEffect(()=>{
+    useEffect(()=>{fetchMesssages()},[currentRoomID])
+    useEffect(()=>{
         socket.on("reload-msg",()=>{fetchMesssages()})
         return ()=>{
             socket.off("reload-msg")
@@ -50,8 +46,10 @@ function ChatroomInterface(props){
     }
     
     const fetchMesssages = async () =>{
-        if (props.currentRoomID === undefined)
+        if (currentRoomID === undefined){
             setMessages([])
+            return
+        }
         try{
             const response = await axios.get(`http://localhost:3001/api/message/${currentRoomID}/${userID}`)  
             setMessages(response.data)
@@ -67,8 +65,6 @@ function ChatroomInterface(props){
         </div>
             
         <MessagesContainer 
-            userID = {userID}
-            currentRoomID = {props.currentRoomID}
             deletemessage={(messageId)=>{deleteMessage(messageId)}} 
             messages={messages}
         />
